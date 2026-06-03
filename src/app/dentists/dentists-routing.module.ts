@@ -1,7 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { DentistComponent } from './dentist/dentist.component';
 
-const routes: Routes = [];
+const routes: Routes = [
+  {
+    path: '',
+    component: DentistComponent
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
