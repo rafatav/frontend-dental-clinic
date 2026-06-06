@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { TemplateRoutingModule } from './template-routing.module';
@@ -11,6 +11,8 @@ import { SpecialtiesModule } from '../specialties/specialties.module';
 import { UsersModule } from '../users/users.module';
 import { ReportsModule } from '../reports/reports.module';
 
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { ReportsModule } from '../reports/reports.module';
     PatientsModule,
     ReportsModule,
     SpecialtiesModule,
-    UsersModule
+    UsersModule,
+    MatIconModule,
+    MatListModule
   ]
 })
 export class TemplateModule { }
