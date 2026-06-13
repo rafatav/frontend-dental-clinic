@@ -16,3 +16,14 @@
 .border-matlistitem {
   border-radius: 0 !important;
 }
+
+.logout-btn {
+  background-color: #d91212;
+  color: #FFF;
+  border-radius: 10px;
+  transition: 0.2s ease;
+}
+
+.logout-btn:hover {
+  background-color: #ff2d2d;
+}

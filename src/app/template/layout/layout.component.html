@@ -42,10 +42,13 @@
         <span matListItemTitle>Usuários</span>
       </a>
     </mat-nav-list>
-
-    <div class="p-4 flex items-center gap-3">
-      <mat-icon class="text-green-400" aria-hidden="false">verified_user</mat-icon>
-      <span class="text-sm text-gray-800">Admin Logado</span>
+    
+    <div class="flex">
+      <div class="p-4 flex items-center gap-3">
+        <mat-icon class="text-green-400" aria-hidden="false">verified_user</mat-icon>
+        <span class="text-sm text-gray-800">Admin Logado</span>
+      </div>
+      <button class="logout-btn text-md px-6 m-2" (click)="logout()">Sair</button>
     </div>
   </aside>
 
