@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { LoginRoutingModule } from './login-routing.module';
 import { LoginComponent } from './login/login.component';
@@ -14,7 +14,7 @@ import { MatIcon } from "@angular/material/icon";
   imports: [
     CommonModule,
     LoginRoutingModule,
-    FormsModule,
+    ReactiveFormsModule,
     MatIcon
 ]
 })

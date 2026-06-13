@@ -7,20 +7,20 @@
 
     <div class="h-[calc(100%/2)] flex flex-col justify-top items-center bg-login">
         <div class="login-form mt-8">
-            <form>
+            <form id="loginForm" [formGroup]="formFields" (ngSubmit)="login()">
                 <div class="flex">
                     <div class="login-form-icon">
                         <mat-icon fontIcon="mail"></mat-icon>
                     </div>
-                    <input type="text" placeholder="Informe o e-mail">
+                    <input type="email" id="email" name="email" placeholder="Informe o e-mail" required autocomplete="email" formControlName="email">
                 </div>
                 <div class="flex">
                     <div class="login-form-icon">
                         <mat-icon fontIcon="key"></mat-icon>
                     </div>
-                    <input type="text" placeholder="Informe a senha">
+                    <input type="password" id="password" name="password" placeholder="Informe a senha" required formControlName="password">
                 </div>
-                <div class="contact-form">
+                <div>
                     <input type="submit" class="login-form-btn" value="Login" />
                 </div>
             </form>
