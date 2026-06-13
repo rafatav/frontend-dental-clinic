@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { AuthResponse } from '../app/auth-reponse.model';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -48,5 +49,21 @@ export class AuthService {
 
   isLoggedIn(): boolean {
     return !!this.getToken();
+  }
+
+  getRoles(): string[] {
+    const token = this.getToken();
+    if (!token) return [];
+    
+    try {
+      const decodedToken: any = jwtDecode(token);
+      return decodedToken.authorities || [];
+    } catch (error) {
+      return [];
+    }
+  }
+
+  isAdmin(): boolean {
+    return this.getRoles().includes('ROLE_ADMIN');
   }
 }

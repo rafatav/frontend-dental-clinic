@@ -37,7 +37,7 @@
         <span matListItemTitle>Relatórios</span>
       </a>
       
-      <a mat-list-item class="border-matlistitem" routerLink="/users" routerLinkActive="router-active">
+      <a *ngIf="isAdmin" mat-list-item class="border-matlistitem" routerLink="/users" routerLinkActive="router-active">
         <mat-icon matListItemIcon class="material-symbols-outlined">supervisor_account</mat-icon>
         <span matListItemTitle>Usuários</span>
       </a>
@@ -46,9 +46,13 @@
     <div class="flex">
       <div class="p-4 flex items-center gap-3">
         <mat-icon class="text-green-400" aria-hidden="false">verified_user</mat-icon>
-        <span class="text-sm text-gray-800">Admin Logado</span>
+        @if(isAdmin) {
+          <span class="text-sm text-gray-800">Admin Logado</span>
+        } @else {
+          <span class="text-sm text-gray-800">Dentista Logado</span>
+        }
       </div>
-      <button class="logout-btn text-md px-6 m-2" (click)="logout()">Sair</button>
+      <button class="logout-btn text-md px-5 m-2" (click)="logout()">Sair</button>
     </div>
   </aside>
 
