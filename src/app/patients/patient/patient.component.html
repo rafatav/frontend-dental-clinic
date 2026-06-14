@@ -16,8 +16,8 @@
             <button type="button" (click)="filter()" class="bg-blue-600 text-white px-4 py-3 hover:bg-blue-800 rounded w-40 flex items-center justify-center gap-2 transition-colors">
                 <mat-icon fontIcon="search" class="text-white"></mat-icon> Pesquisar
             </button>
-            <button type="button" (click)="insert()" class="bg-green-600 text-white px-4 py-3 hover:bg-green-800 rounded w-40 flex items-center justify-center gap-2 transition-colors">
-                <mat-icon fontIcon="add" class="text-white"></mat-icon> Criar
+            <button type="button" (click)="openDialog()" class="bg-green-600 text-white px-4 py-3 hover:bg-green-800 rounded w-40 flex items-center justify-center gap-2 transition-colors">
+                <mat-icon fontIcon="add" class="text-white"></mat-icon> Adicionar
             </button>
         </div>
     </div>
@@ -59,7 +59,7 @@
                     <th mat-header-cell *matHeaderCellDef></th>
                     <td mat-cell *matCellDef="let patient"> 
                         <div class="flex items-center gap-2">
-                            <button mat-button (click)="stageUpdate(patient.id)" class="!flex !items-center gap-1 hover:!text-yellow-600 transition-colors duration-200">
+                            <button mat-button (click)="openDialog(patient)" class="!flex !items-center gap-1 hover:!text-yellow-600 transition-colors duration-200">
                                 <mat-icon fontIcon="edit"></mat-icon> Editar
                             </button>
                             <button mat-button (click)="stageDelete(patient)" class="!flex !items-center gap-1 hover:!text-red-600 transition-colors duration-200">

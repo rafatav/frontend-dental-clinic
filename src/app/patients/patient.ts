@@ -4,5 +4,5 @@ export class Patient {
     email?: string;
     cpf?: string;
     createdAt?: string;
-    phoneNumer?: string;
+    phoneNumber?: string;
 }

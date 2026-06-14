@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Patient } from '../patient';
 import { PatientService } from '../patient.service';
 
+import { MatDialog } from '@angular/material/dialog';
+import { PatientDialogComponent } from '../patient-dialog/patient-dialog.component';
+
 @Component({
   selector: 'app-patient',
   standalone: false,
@@ -14,24 +17,39 @@ export class PatientComponent implements OnInit{
   displayedColumns: string[] = ['id', 'name', 'cpf', 'email', 'phoneNumber', 'actions'];
   patientFiltered: string = '';
 
-  constructor(private service : PatientService) {
+  constructor(private service : PatientService,
+              private dialog : MatDialog
+  ) {
   }
 
-
-  ngOnInit(): void {
+  loadPatients(): void {
     this.service.getAll().subscribe(patientsList => this.patients = patientsList);
   }
 
-  stageUpdate(id: string) {
-    console.log(id);
+  ngOnInit(): void {
+    this.loadPatients();
+  }
+
+  openDialog(patient?: Patient): void {
+    const dialogRef = this.dialog.open(PatientDialogComponent, {
+      width: '450px',
+      data: patient
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.loadPatients();
+      }
+    })
   }
 
   stageDelete(patient: Patient) {
-    console.log(patient);
-  }
-
-  deleteObject(patient: Patient) {
-    console.log(patient);
+    if (confirm(`Deseja realmente excluir o paciente ${patient.name}?`)) {
+      this.service.delete(patient.id).subscribe({
+        next: () => this.loadPatients(),
+        error: err => console.error("Erro ao deletar: ", err)
+      })
+    }
   }
 
   filter() {
@@ -41,8 +59,5 @@ export class PatientComponent implements OnInit{
         error: error => console.error("Ocorreu um erro: ", error)
       }
     )
-  }
-
-  insert() {
   }
 }
