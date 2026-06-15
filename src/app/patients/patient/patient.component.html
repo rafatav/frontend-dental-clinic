@@ -72,6 +72,13 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
+                <mat-paginator [length]="totalElements"
+                    [pageSize]="pageSize"
+                    [hidePageSize]="true"
+                    (page)="onPageChange($event)"
+                    showFirstLastButtons
+                    aria-label="Selecione a página de pacientes">
+                </mat-paginator>
         </mat-card-content>
     </mat-card>
 </div>

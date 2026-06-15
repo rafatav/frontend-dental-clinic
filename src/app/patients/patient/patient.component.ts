@@ -3,6 +3,8 @@ import { Patient } from '../patient';
 import { PatientService } from '../patient.service';
 
 import { MatDialog } from '@angular/material/dialog';
+import { PageEvent } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { PatientDialogComponent } from '../patient-dialog/patient-dialog.component';
 
 @Component({
@@ -13,21 +15,28 @@ import { PatientDialogComponent } from '../patient-dialog/patient-dialog.compone
 })
 export class PatientComponent implements OnInit{
   
-  patients: Patient[] = [];
+  patients = new MatTableDataSource<Patient>([]);
   displayedColumns: string[] = ['id', 'name', 'cpf', 'email', 'phoneNumber', 'actions'];
   patientFiltered: string = '';
+
+  totalElements = 0;
+  pageSize = 10;
+  pageIndex = 0;
 
   constructor(private service : PatientService,
               private dialog : MatDialog
   ) {
   }
 
-  loadPatients(): void {
-    this.service.getAll().subscribe(patientsList => this.patients = patientsList);
+  loadPatients(page: number, size: number): void {
+    this.service.getAll(page, size, this.patientFiltered).subscribe(patientList => {
+      this.patients.data = patientList.content; 
+      this.totalElements = patientList.totalElements; 
+    });
   }
 
   ngOnInit(): void {
-    this.loadPatients();
+    this.loadPatients(this.pageIndex, this.pageSize);
   }
 
   openDialog(patient?: Patient): void {
@@ -38,26 +47,28 @@ export class PatientComponent implements OnInit{
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
-        this.loadPatients();
+        this.loadPatients(this.pageIndex, this.pageSize);
       }
     })
+  }
+
+  onPageChange(event: PageEvent) {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.loadPatients(this.pageIndex, this.pageSize);
   }
 
   stageDelete(patient: Patient) {
     if (confirm(`Deseja realmente excluir o paciente ${patient.name}?`)) {
       this.service.delete(patient.id).subscribe({
-        next: () => this.loadPatients(),
+        next: () => this.loadPatients(this.pageIndex, this.pageSize),
         error: err => console.error("Erro ao deletar: ", err)
       })
     }
   }
 
   filter() {
-    this.service.filter(this.patientFiltered).subscribe(
-      {
-        next: (patientFiltered) => this.patients = patientFiltered,
-        error: error => console.error("Ocorreu um erro: ", error)
-      }
-    )
+    this.pageIndex = 0;
+    this.loadPatients(this.pageIndex, this.pageSize);
   }
 }

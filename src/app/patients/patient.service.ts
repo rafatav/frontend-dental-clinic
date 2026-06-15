@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Patient } from './patient';
+import { Page } from './patient';
 
 @Injectable({
   providedIn: 'root'
@@ -11,22 +12,28 @@ export class PatientService {
   constructor(private http: HttpClient) {
   }
 
-  getAll() : Observable<Patient[]> {
-    return this.http.get<Patient[]>('http://localhost:8080/patients');
+  getAll(page: number = 0, size: number = 10, filter: string = '') : Observable<Page<Patient>> {
+    let params = new HttpParams()
+    .set('page', page.toString())
+    .set('size', size.toString());
+
+    if (filter) {
+      params = params.set('name', filter); 
+    }
+
+    return this.http.get<Page<Patient>>('http://localhost:8080/patients', { params });
   }
 
-  filter(name: string) : Observable<Patient[]> {
-    let par = new HttpParams();
+  filter(name: string, page: number = 0, size: number = 10) : Observable<Page<Patient>> {
+    let params = new HttpParams()
+    .set('page', page.toString())
+    .set('size', size.toString());
 
     if (name) {
-      par = par.set('name', name);
+      params = params.set('name', name);
     }
     
-    return this.http.get<Patient[]>('http://localhost:8080/patients', 
-      {
-        params: par
-      }
-    )
+    return this.http.get<Page<Patient>>('http://localhost:8080/patients', { params });
   }
 
   insert(patient: Patient): Observable<Patient> {

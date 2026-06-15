@@ -6,3 +6,11 @@ export class Patient {
     createdAt?: string;
     phoneNumber?: string;
 }
+
+export interface Page<T> {
+  content: T[];
+  totalElements: number;
+  totalPages: number;
+  size: number;
+  number: number;
+}
