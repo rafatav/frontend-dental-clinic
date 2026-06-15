@@ -1,1 +1,90 @@
-<p>dentist works!</p>
+<div class="p-4 bg-header text-white shadow-lg tracking-wider mb-5 relative z-10">
+    <h1 class="text-3xl">Dentistas</h1>
+</div>
+
+<form #frm="ngForm">
+    <div class="flex justify-center mb-5">
+        <div class="w-[80%] flex flex-col md:flex-row items-center justify-center gap-4">
+            
+            <input type="text" placeholder="Pesquise pelo nome do dentista"
+                    name="lugarFiltrado"
+                    [(ngModel)]="dentistFiltered"
+                    autofocus
+                    (keyup.enter)="filter()"
+                    class="w-full p-3 border border-slate-300 shadow-sm rounded focus:ring focus:ring-blue-400">
+            
+            <button type="button" (click)="filter()" class="bg-blue-600 text-white px-4 py-3 hover:bg-blue-800 rounded w-40 flex items-center justify-center gap-2 transition-colors">
+                <mat-icon fontIcon="search" class="text-white"></mat-icon> Pesquisar
+            </button>
+            <button type="button" (click)="openDialog()" class="bg-green-600 text-white px-4 py-3 hover:bg-green-800 rounded w-40 flex items-center justify-center gap-2 transition-colors">
+                <mat-icon fontIcon="add" class="text-white"></mat-icon> Adicionar
+            </button>
+        </div>
+    </div>
+</form>
+
+<div class="flex justify-center">
+    <mat-card appearance="outlined" class="w-[80%] !bg-white !border-slate-300 !rounded">
+        <mat-card-header>
+            <mat-card-title>Resultado</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <table mat-table [dataSource]="dentists" class="!bg-white w-full">
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef> Id </th>
+                    <td mat-cell *matCellDef="let dentist"> {{dentist.id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Nome </th>
+                    <td mat-cell *matCellDef="let dentist"> {{dentist.name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="cro">
+                    <th mat-header-cell *matHeaderCellDef> CRO </th>
+                    <td mat-cell *matCellDef="let dentist"> {{dentist.cro}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="cpf">
+                    <th mat-header-cell *matHeaderCellDef> CPF </th>
+                    <td mat-cell *matCellDef="let dentist"> {{dentist.cpf}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="active">
+                    <th mat-header-cell *matHeaderCellDef> Status </th>
+                    <td mat-cell *matCellDef="let dentist"> 
+                        <span [class]="dentist.active ? 'bg-green-100 text-green-800 border-green-200' : 'bg-red-100 text-red-800 border-red-200'" 
+                              class="px-2 py-1 text-xs font-semibold rounded-full border">
+                            {{ dentist.active ? 'Ativo' : 'Inativo' }}
+                        </span>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let dentist"> 
+                        <div class="flex items-center gap-2">
+                            <button mat-button (click)="openDialog(dentist)" class="!flex !items-center gap-1 hover:!text-yellow-600 transition-colors duration-200">
+                                <mat-icon fontIcon="edit"></mat-icon> Editar
+                            </button>
+                            <!-- <button mat-button (click)="stageDelete(dentist)" class="!flex !items-center gap-1 hover:!text-red-600 transition-colors duration-200">
+                                <mat-icon fontIcon="delete"></mat-icon> Deletar
+                            </button> -->
+                        </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            
+            <mat-paginator [length]="totalElements"
+                [pageSize]="pageSize"
+                [hidePageSize]="true"
+                (page)="onPageChange($event)"
+                showFirstLastButtons
+                aria-label="Selecione a página de dentistas">
+            </mat-paginator>
+        </mat-card-content>
+    </mat-card>
+</div>
