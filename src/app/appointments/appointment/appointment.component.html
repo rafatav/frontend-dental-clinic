@@ -1,1 +1,85 @@
-<p>appointment works!</p>
+<div class="p-4 bg-header text-white shadow-lg tracking-wider mb-5 relative z-10">
+    <h1 class="text-3xl">Consultas Agendadas</h1>
+</div>
+
+<form #frm="ngForm">
+    <div class="flex justify-center mb-5">
+        <div class="w-[80%] flex flex-col md:flex-row items-center justify-center gap-4">
+            
+            <input type="text" placeholder="Pesquise pelo nome do paciente"
+                name="appointmentFiltered"
+                [(ngModel)]="appointmentFiltered"
+                autofocus
+                (keyup.enter)="filter()"
+                class="w-full p-3 border border-slate-300 shadow-sm rounded focus:ring focus:ring-blue-400">
+            
+            <button type="button" (click)="filter()" class="bg-blue-600 text-white px-4 py-3 hover:bg-blue-800 rounded w-40 flex items-center justify-center gap-2 transition-colors">
+                <mat-icon fontIcon="search" class="text-white"></mat-icon> Buscar
+            </button>
+            <button type="button" (click)="openDialog()" class="bg-green-600 text-white px-4 py-3 hover:bg-green-800 rounded w-40 flex items-center justify-center gap-2 transition-colors">
+                <mat-icon fontIcon="add" class="text-white"></mat-icon> Agendar
+            </button>
+        </div>
+    </div>
+</form>
+
+<div class="flex justify-center">
+    <mat-card appearance="outlined" class="w-[80%] !bg-white !border-slate-300 !rounded">
+        <mat-card-header>
+            <mat-card-title>Agenda</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <table mat-table [dataSource]="appointments" class="!bg-white w-full">
+                
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef> Id </th>
+                    <td mat-cell *matCellDef="let appt"> {{appt.id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="patient">
+                    <th mat-header-cell *matHeaderCellDef> Paciente </th>
+                    <td mat-cell *matCellDef="let appt"> <span class="font-semibold">{{appt.patient?.name}}</span> </td>
+                </ng-container>
+
+                <ng-container matColumnDef="dentist">
+                    <th mat-header-cell *matHeaderCellDef> Dentista </th>
+                    <td mat-cell *matCellDef="let appt"> {{appt.dentist?.name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="startTime">
+                    <th mat-header-cell *matHeaderCellDef> Data/Hora </th>
+                    <td mat-cell *matCellDef="let appt"> {{appt.startTime | date:'dd/MM/yyyy HH:mm'}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef> Status </th>
+                    <td mat-cell *matCellDef="let appt"> 
+                        <span [ngClass]="{'bg-green-100 text-green-800': appt.status === 'SCHEDULED', 'bg-red-100 text-red-800': appt.status === 'CANCELLED', 'bg-gray-100 text-gray-800': appt.status === 'COMPLETED'}" 
+                              class="px-2 py-1 text-xs font-semibold rounded-full border">
+                            {{ appt.status }}
+                        </span>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let appt"> 
+                        <div class="flex items-center gap-2">
+                            <button mat-button (click)="openDialog(appt)" class="!flex !items-center gap-1 hover:!text-blue-600 transition-colors duration-200">
+                                <mat-icon fontIcon="edit"></mat-icon> Editar
+                            </button>
+                            <button *ngIf="appt.status !== 'CANCELLED'" mat-button (click)="stageCancel(appt)" class="!flex !items-center gap-1 hover:!text-red-600 transition-colors duration-200">
+                                <mat-icon fontIcon="cancel"></mat-icon> Cancelar
+                            </button>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            
+            <mat-paginator [length]="totalElements" [pageSize]="pageSize" [hidePageSize]="true" (page)="onPageChange($event)" showFirstLastButtons></mat-paginator>
+        </mat-card-content>
+    </mat-card>
+</div>
