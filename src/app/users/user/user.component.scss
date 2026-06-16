@@ -1,0 +1,8 @@
+.bg-header {
+background: linear-gradient(146deg,rgba(36, 126, 140, 1) 0%, rgba(75, 158, 168, 1) 10%, rgb(111, 217, 219)
+ 100%);
+}
+
+::ng-deep .mat-mdc-paginator-container {
+    justify-content: center !important;
+}
