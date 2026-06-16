@@ -33,10 +33,6 @@ export class AppointmentService {
     return this.http.put<Appointment>(`${this.API_URL}/${id}`, appointment);
   }
 
-  delete(id: number | undefined): Observable<void> {
-    return this.http.delete<void>(`${this.API_URL}/${id}`);
-  }
-
   cancel(id: number | undefined, reason: string): Observable<void> {
     return this.http.patch<void>(`${this.API_URL}/${id}/cancel`, { reason });
   }

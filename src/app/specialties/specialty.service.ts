@@ -44,8 +44,4 @@ export class SpecialtyService {
   update(id: number | undefined, specialty: Specialty): Observable<Specialty> {
     return this.http.put<Specialty>(`${this.API_URL}/${id}`, specialty);
   }
-
-  delete(id: number | undefined): Observable<void> {
-    return this.http.delete<void>(`${this.API_URL}/${id}`);
-  }
 }

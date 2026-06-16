@@ -57,15 +57,6 @@ export class DentistComponent implements OnInit {
     this.loadDentists(this.pageIndex, this.pageSize);
   }
 
-  stageDelete(dentist: Dentist) {
-    if (confirm(`Deseja realmente excluir o dentista ${dentist.name}?`)) {
-      this.service.delete(dentist.id).subscribe({
-        next: () => this.loadDentists(this.pageIndex, this.pageSize),
-        error: err => console.error("Erro ao deletar: ", err)
-      });
-    }
-  }
-
   filter() {
     this.pageIndex = 0;
     this.loadDentists(this.pageIndex, this.pageSize);

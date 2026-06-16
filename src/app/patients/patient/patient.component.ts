@@ -58,15 +58,6 @@ export class PatientComponent implements OnInit{
     this.loadPatients(this.pageIndex, this.pageSize);
   }
 
-  stageDelete(patient: Patient) {
-    if (confirm(`Deseja realmente excluir o paciente ${patient.name}?`)) {
-      this.service.delete(patient.id).subscribe({
-        next: () => this.loadPatients(this.pageIndex, this.pageSize),
-        error: err => console.error("Erro ao deletar: ", err)
-      })
-    }
-  }
-
   filter() {
     this.pageIndex = 0;
     this.loadPatients(this.pageIndex, this.pageSize);

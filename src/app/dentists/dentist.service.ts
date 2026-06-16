@@ -32,8 +32,4 @@ export class DentistService {
   update(id: number | undefined, dentist: Dentist): Observable<Dentist> {
     return this.http.put<Dentist>(`${this.API_URL}/${id}`, dentist);
   }
-
-  delete(id: number | undefined): Observable<void> {
-    return this.http.delete<void>(`${this.API_URL}/${id}`);
-  }
 }
