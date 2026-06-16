@@ -1,0 +1,71 @@
+<div class="p-6 max-w-md bg-white rounded-lg">
+  <h2 class="text-2xl font-semibold text-gray-800 border-b pb-3 mb-4">
+    {{ isEditMode ? 'Editar Cadastro do Usuário' : 'Cadastrar Novo Usuário' }}
+  </h2>
+
+  <form [formGroup]="form" class="flex flex-col gap-4">
+    
+    <div class="flex flex-col gap-1">
+      <label class="text-sm font-medium text-gray-600">Nome Completo</label>
+      <input type="text" formControlName="name" 
+             class="p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-400 outline-none">
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <label class="text-sm font-medium text-gray-600">CPF</label>
+      <input type="text" formControlName="cpf" 
+             class="p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-400 outline-none">
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <label class="text-sm font-medium text-gray-600">E-mail (Usado no Login)</label>
+      <input type="email" formControlName="email" 
+             class="p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-400 outline-none">
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <label class="text-sm font-medium text-gray-600">Senha de Acesso</label>
+      <input type="password" formControlName="password" [placeholder]="isEditMode ? 'Preencha apenas se quiser alterar' : 'Mínimo 6 caracteres'"
+             class="p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-400 outline-none">
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <label class="text-sm font-medium text-gray-600">Nível de Permissão (Segure Ctrl para selecionar mais de uma)</label>
+      <select formControlName="selectedRoles" multiple
+              class="p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-400 outline-none h-20 bg-white">
+        @for (role of availableRoles; track role.id) {
+          <option [value]="role.authority">{{ role.label }}</option>
+        }
+      </select>
+    </div>
+
+    @if (isEditMode) {
+      <div class="flex flex-col gap-3 mt-2 bg-slate-50 p-3 rounded border border-slate-200">
+        
+        <div class="flex items-center gap-2">
+            <input type="checkbox" formControlName="active" id="activeCheckbox"
+                class="w-5 h-5 text-blue-600 rounded cursor-pointer accent-blue-600">
+            <label for="activeCheckbox" class="text-sm font-medium text-gray-700 cursor-pointer">
+              Acesso Ativo no Sistema
+            </label>
+        </div>
+
+        <div class="text-xs text-gray-500 flex items-center gap-1 border-t border-slate-200 pt-2">
+            <mat-icon fontIcon="history" class="text-gray-400 !text-sm !w-4 !h-4 flex items-center justify-center"></mat-icon>
+            Último acesso em: <span class="font-semibold">{{ data.lastLogin ? (data.lastLogin | date:'dd/MM/yyyy HH:mm') : 'Nunca acessou' }}</span>
+        </div>
+      </div>
+    }
+
+    <div class="flex justify-end gap-2 border-t pt-4 mt-2">
+      <button type="button" (click)="cancel()" 
+              class="px-4 py-2 border border-gray-300 rounded text-gray-700 hover:bg-gray-100 transition">
+        Cancelar
+      </button>
+      <button type="button" (click)="save()" [disabled]="form.invalid"
+              class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-800 transition disabled:opacity-50">
+        Salvar
+      </button>
+    </div>
+  </form>
+</div>
