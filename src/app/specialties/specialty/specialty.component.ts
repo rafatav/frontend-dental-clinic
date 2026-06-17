@@ -57,15 +57,6 @@ export class SpecialtyComponent implements OnInit {
     this.loadSpecialties(this.pageIndex, this.pageSize);
   }
 
-  stageDelete(specialty: Specialty) {
-    if (confirm(`Deseja realmente excluir a especialidade ${specialty.name}?`)) {
-      this.service.delete(specialty.id).subscribe({
-        next: () => this.loadSpecialties(this.pageIndex, this.pageSize),
-        error: err => console.error("Erro ao deletar: ", err)
-      });
-    }
-  }
-
   filter() {
     this.pageIndex = 0;
     this.loadSpecialties(this.pageIndex, this.pageSize);

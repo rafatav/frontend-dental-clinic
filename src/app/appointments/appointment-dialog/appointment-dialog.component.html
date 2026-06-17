@@ -1,0 +1,79 @@
+<div class="p-6 max-w-md bg-white rounded-lg relative overflow-visible">
+  <h2 class="text-2xl font-semibold text-gray-800 border-b pb-3 mb-4">
+    {{ isEditMode ? 'Editar Consulta' : 'Nova Consulta' }}
+  </h2>
+
+  <form [formGroup]="form" class="flex flex-col gap-4">
+    
+    <div class="flex flex-col gap-1 relative">
+      <label class="text-sm font-medium text-gray-600">Pesquisar Paciente</label>
+      <input type="text" formControlName="patientSearch" [matAutocomplete]="autoPatient" placeholder="Digite o nome do paciente..."
+             class="p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-400 outline-none w-full bg-white">
+      
+      <mat-autocomplete #autoPatient="matAutocomplete" [displayWith]="displayPatient" (optionSelected)="onPatientSelected($event.option.value)">
+        @for (p of patients; track p.id) {
+          <mat-option [value]="p" class="!text-sm">
+            <span class="font-semibold">{{ p.name }}</span> <span class="text-gray-500 text-xs ml-2">CPF: {{ p.cpf }}</span>
+          </mat-option>
+        }
+      </mat-autocomplete>
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <label class="text-sm font-medium text-gray-600">Dentista Responsável</label>
+      <select formControlName="dentistId" class="p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-400 outline-none w-full bg-white">
+        <option value="" disabled selected>Selecione um profissional</option>
+        @for (dentist of dentists; track dentist.id) {
+          <option [value]="dentist.id">{{ dentist.name }} (CRO: {{dentist.cro}})</option>
+        }
+      </select>
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <label class="text-sm font-medium text-gray-600">Procedimento / Descrição</label>
+      <input type="text" formControlName="description" placeholder="Ex: Avaliação geral"
+             class="p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-400 outline-none">
+    </div>
+
+    <div class="flex gap-4">
+      <div class="flex flex-col gap-1 w-1/2">
+        <label class="text-sm font-medium text-gray-600">Início</label>
+        <input type="datetime-local" formControlName="startTime" 
+               class="p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-400 outline-none">
+      </div>
+      <div class="flex flex-col gap-1 w-1/2">
+        <label class="text-sm font-medium text-gray-600">Fim</label>
+        <input type="datetime-local" formControlName="endTime" 
+               class="p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-400 outline-none">
+      </div>
+    </div>
+
+    @if (isEditMode) {
+      <div class="flex flex-col gap-1 mt-2">
+        <label class="text-sm font-medium text-gray-600">Status da Consulta</label>
+        <select formControlName="status" class="p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-400 outline-none bg-white">
+          <option value="SCHEDULED">Agendada (SCHEDULED)</option>
+          <option value="COMPLETED">Concluída (COMPLETED)</option>
+          <option value="CANCELLED">Cancelada (CANCELLED)</option>
+        </select>
+      </div>
+    }
+
+    @if (backendError) {
+      <div class="mt-2 text-sm font-medium text-red-600 bg-red-50 p-3 rounded border border-red-200 flex items-center gap-2">
+        <mat-icon fontIcon="error" class="!text-red-600 !w-5 !h-5 !text-[20px]"></mat-icon>
+        {{ backendError }}
+      </div>
+    }
+    <div class="flex justify-end gap-2 border-t pt-4 mt-2">
+      <button type="button" (click)="cancel()" 
+              class="px-4 py-2 border border-gray-300 rounded text-gray-700 hover:bg-gray-100 transition">
+        Sair
+      </button>
+      <button type="button" (click)="save()" [disabled]="form.invalid"
+              class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-800 transition disabled:opacity-50">
+        Salvar Agenda
+      </button>
+    </div>
+  </form>
+</div>

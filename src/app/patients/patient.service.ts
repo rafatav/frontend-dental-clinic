@@ -43,8 +43,4 @@ export class PatientService {
   update(id: number | undefined, patient: Patient): Observable<Patient> {
     return this.http.put<Patient>(`http://localhost:8080/patients/${id}`, patient);
   }
-
-  delete(id: number | undefined): Observable<void> {
-    return this.http.delete<void>(`http://localhost:8080/patients/${id}`);
-  }
 }

@@ -57,15 +57,6 @@ export class UserComponent implements OnInit {
     this.loadUsers(this.pageIndex, this.pageSize);
   }
 
-  stageDelete(user: User) {
-    if (confirm(`Deseja realmente excluir o usuário ${user.name}?`)) {
-      this.service.delete(user.id).subscribe({
-        next: () => this.loadUsers(this.pageIndex, this.pageSize),
-        error: err => console.error("Erro ao deletar: ", err)
-      });
-    }
-  }
-
   filter() {
     this.pageIndex = 0;
     this.loadUsers(this.pageIndex, this.pageSize);

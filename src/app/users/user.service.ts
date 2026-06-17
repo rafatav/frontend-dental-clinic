@@ -32,8 +32,4 @@ export class UserService {
   update(id: number | undefined, user: User): Observable<User> {
     return this.http.put<User>(`${this.API_URL}/${id}`, user);
   }
-
-  delete(id: number | undefined): Observable<void> {
-    return this.http.delete<void>(`${this.API_URL}/${id}`);
-  }
 }
