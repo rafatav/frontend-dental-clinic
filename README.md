@@ -1,59 +1,54 @@
-# DentalClinic
+# Dental Clinic - Front-end
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.25.
+Este projeto é a interface web do sistema de Gestão de Consultas Odontológicas Cleanic. Ele foi desenvolvido utilizando Angular e fornece as telas para gerenciar pacientes, dentistas, especialidades e agendamentos, consumindo a API REST do back-end em Spring Boot.
 
-## Development server
+---
 
-To start a local development server, run:
+## Tecnologias Utilizadas
 
-```bash
-ng serve
-```
+* **Angular** (versão 19.2.25)
+* **Angular Material** (Componentes de interface)
+* **Tailwind CSS** (Estilização e layout)
+* **Integração OAuth2 / JWT** (Controle de acesso e autenticação)
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
+## Como Configurar e Executar o Projeto
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Pré-requisitos
+* **Node.js** instalado na sua máquina.
+* **Angular CLI** instalado globalmente (rode o comando `npm install -g @angular/cli`).
+* Back-end do Cleanic rodando localmente (normalmente na porta `8080`).
 
-```bash
-ng generate component component-name
-```
+### Servidor de Desenvolvimento
+Para instalar as dependências e iniciar o servidor de desenvolvimento local, siga exatamente os passos abaixo:
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+1. Clone este repositório para a sua máquina local.
+2. Abra o terminal na pasta raiz do projeto front-end.
+3. Execute o comando **`npm install`** para baixar todas as dependências mapeadas no `package.json`.
+4. Execute o comando **`ng serve`** para iniciar a aplicação.
+5. Abra o seu navegador e acesse a URL **`http://localhost:4200/`**.
 
-```bash
-ng generate --help
-```
+A aplicação será recarregada automaticamente em tempo real caso você altere e salve qualquer um dos arquivos de código-fonte.
 
-## Building
+---
 
-To build the project run:
+## Geração de Componentes (Scaffolding)
 
-```bash
-ng build
-```
+O Angular CLI possui ferramentas nativas para agilizar a criação de arquivos. Para gerar um novo componente, utilize o comando:
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+> `ng generate component nome-do-componente`
 
-## Running unit tests
+Para visualizar a lista completa de esquemas de geração disponíveis (como services, directives, pipes ou guards), utilize o comando de ajuda:
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+> `ng generate --help`
 
-```bash
-ng test
-```
+---
 
-## Running end-to-end tests
+## Build para Produção
 
-For end-to-end (e2e) testing, run:
+Para compilar o projeto e prepará-lo para o ambiente de produção (deploy), execute:
 
-```bash
-ng e2e
-```
+> `ng build`
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Este comando compila o seu projeto e armazena os arquivos estáticos e otimizados no diretório `dist/`. O build de produção otimiza automaticamente o código para garantir a melhor performance e velocidade de carregamento na web.
